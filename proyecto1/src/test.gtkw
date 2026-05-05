@@ -1,0 +1,64 @@
+[*]
+[*] GTKWave Analyzer v3.3.121 (w)1999-2024 BSI
+[*]
+[dumpfile] "/home/alberto/AOC2/proyecto1/src/test.ghw"
+[savefile] "/home/alberto/AOC2/proyecto1/src/test.gtkw"
+[timestart] 0
+[size] 1200 800
+[pos] -1 -1
+*-26.000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 300
+[signals_width] 250
+[sst_expanded] 1
+@28
+top.testbench_super.clk
+top.testbench_super.reset
+@200
+-
+-=== EXCEPCIONES (RF6 y RF7) ===
+@28
+top.testbench_super.ext_irq
+top.testbench_super.uut.mips_core.exception_accepted
+top.testbench_super.uut.mips_core.data_abort
+top.testbench_super.uut.mips_core.rte_id
+@22
+top.testbench_super.uut.mips_core.exception_lr_output
+@200
+-
+-=== CAUCE Y PC ===
+@22
+top.testbench_super.uut.mips_core.pc_out
+top.testbench_super.uut.mips_core.ir_id
+@28
+top.testbench_super.uut.mips_core.valid_i_if
+top.testbench_super.uut.mips_core.valid_i_id
+top.testbench_super.uut.mips_core.valid_i_ex
+top.testbench_super.uut.mips_core.valid_i_mem
+top.testbench_super.uut.mips_core.valid_i_wb
+@200
+-
+-=== RIESGOS (STALL Y FLUSH - RF3 y RF4) ===
+@28
+top.testbench_super.uut.mips_core.stall_mips
+top.testbench_super.uut.mips_core.stall_id
+top.testbench_super.uut.mips_core.kill_if
+top.testbench_super.uut.mips_core.salto_tomado
+@200
+-
+-=== ALU MAC Y ANTICIPACION (RF2, RF5 y RF8) ===
+@28
+top.testbench_super.uut.mips_core.alu_ready
+@22
+top.testbench_super.uut.mips_core.mux_ctrl_a
+top.testbench_super.uut.mips_core.mux_ctrl_b
+@200
+-
+-=== CONTADORES DE RENDIMIENTO (RF9) ===
+@22
+top.testbench_super.uut.mips_core.cycles
+top.testbench_super.uut.mips_core.ins
+top.testbench_super.uut.mips_core.data_stalls
+top.testbench_super.uut.mips_core.control_stalls
+top.testbench_super.uut.mips_core.ex_stalls
+top.testbench_super.uut.mips_core.mem_stalls
+top.testbench_super.uut.mips_core.exceptions

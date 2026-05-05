@@ -1,0 +1,73 @@
+v 4
+file "/home/alberto/AOC2/proyecto1_subsanacion/src/" "adder32.vhd" "314628325a7fba8ded83ce676b48051d32b99dc4" "20260413225805.478":
+  entity adder32 at 20( 486) + 0 on 23;
+  architecture behavioral of adder32 at 39( 1097) + 0 on 24;
+file "/home/alberto/AOC2/proyecto1_subsanacion/src/" "ALU_2026.vhd" "d9ed82315e2a0f7bb4e72a7edecf30efeb093618" "20260413225805.838":
+  entity alu_vector_mac at 17( 634) + 0 on 47;
+  architecture behavioral of alu_vector_mac at 34( 1138) + 0 on 48;
+file "/home/alberto/AOC2/proyecto1_subsanacion/src/" "AOC2_SoC_2026.vhd" "2fbe127ede2393abf4288754d7cf932e17f68d8d" "20260413225805.203":
+  entity aoc2_soc at 3( 26) + 2 on 13;
+  architecture behavior of aoc2_soc at 17( 536) + 2 on 14;
+file "/home/alberto/AOC2/proyecto1_subsanacion/src/" "Banco_EX.vhd" "57445634bb03f893c9352a376ecd62698d63e32d" "20260413225805.716":
+  entity banco_ex at 20( 487) + 0 on 39;
+  architecture behavioral of banco_ex at 88( 3392) + 0 on 40;
+file "/home/alberto/AOC2/proyecto1_subsanacion/src/" "Banco_ID.vhd" "688b006032428225982a73c4921ea61c8c20d37f" "20260413225805.530":
+  entity banco_id at 4( 288) + 0 on 27;
+  architecture behavioral of banco_id at 24( 1122) + 0 on 28;
+file "/home/alberto/AOC2/proyecto1_subsanacion/src/" "Banco_MEM.vhd" "eafad20fe4100104072dc1cc21ae3065594c638f" "20260413225805.937":
+  entity banco_mem at 20( 488) + 0 on 51;
+  architecture behavioral of banco_mem at 68( 2502) + 0 on 52;
+file "/home/alberto/AOC2/proyecto1_subsanacion/src/" "Banco_WB.vhd" "09f709cc072c7c47cd795b43ce7f357e3da439d1" "20260413225806.007":
+  entity banco_wb at 20( 487) + 0 on 55;
+  architecture behavioral of banco_wb at 63( 2304) + 0 on 56;
+file "/home/alberto/AOC2/proyecto1_subsanacion/src/" "bits_shifter.vhd" "84314704fb90b0c3a56bacef575e87f50f736186" "20260413225805.614":
+  entity two_bits_shifter at 20( 491) + 0 on 33;
+  architecture behavioral of two_bits_shifter at 37( 1003) + 0 on 34;
+file "/home/alberto/AOC2/proyecto1_subsanacion/src/" "BReg.vhd" "bb69d410cca56dd4f196ac706a7044ffa4091399" "20260413225805.557":
+  entity breg at 20( 481) + 0 on 29;
+  architecture behavioral of breg at 49( 1525) + 0 on 30;
+file "/home/alberto/AOC2/proyecto1_subsanacion/src/" "counter.vhd" "4c787804472fe6172d2d20f4bfdcfb0934d580c9" "20260413225806.040":
+  entity counter at 20( 487) + 0 on 57;
+  architecture behavioral of counter at 46( 1270) + 0 on 58;
+file "/home/alberto/AOC2/proyecto1_subsanacion/src/" "Exception_manager.vhd" "b132aff84134554da558fcc330761de51c066179" "20260413225805.970":
+  entity exception_manager at 6( 309) + 0 on 53;
+  architecture behavioral of exception_manager at 29( 1771) + 0 on 54;
+file "/home/alberto/AOC2/proyecto1_subsanacion/src/" "Ext_signo.vhd" "a86099b57bba8e351753e752f26601c7908ad4f4" "20260413225805.591":
+  entity ext_signo at 20( 488) + 0 on 31;
+  architecture behavioral of ext_signo at 37( 989) + 0 on 32;
+file "/home/alberto/AOC2/proyecto1_subsanacion/src/" "INCOMPLETE_Mips_segmentado_IRQ_2026.vhd" "02ae69eb3cd7d12088e89e14c269187a1378c992" "20260413225805.284":
+  entity mips_segmentado at 19( 900) + 0 on 17;
+  architecture behavioral of mips_segmentado at 38( 1678) + 0 on 18;
+file "/home/alberto/AOC2/proyecto1_subsanacion/src/" "INCOMPLETE_UA_2026.vhd" "f298813365b5e29c88c2381cd4af25907ca6fd75" "20260413225805.757":
+  entity ua at 7( 246) + 0 on 41;
+  architecture behavioral of ua at 25( 764) + 0 on 42;
+file "/home/alberto/AOC2/proyecto1_subsanacion/src/" "INCOMPLETE_UC_Mips_2026.vhd" "30960f6f124b85150c273d9fae4ef130a438c59c" "20260413225805.637":
+  entity uc at 6( 244) + 0 on 35;
+  architecture behavioral of uc at 37( 1352) + 0 on 36;
+file "/home/alberto/AOC2/proyecto1_subsanacion/src/" "INCOMPLETE_UD_2026.vhd" "2076c6bbd8bffc59bb86734173ad889df2d0a21e" "20260413225805.668":
+  entity ud at 7( 240) + 0 on 37;
+  architecture behavioral of ud at 34( 1881) + 0 on 38;
+file "/home/alberto/AOC2/proyecto1_subsanacion/src/" "IO_MD_subsystem_2026.vhd" "a3b21d804043996e2b729f7c98e4c203d804a061" "20260413225805.229":
+  entity io_data_memory_subsystem at 20( 489) + 0 on 15;
+  architecture behavioral of io_data_memory_subsystem at 56( 2311) + 0 on 16;
+file "/home/alberto/AOC2/proyecto1_subsanacion/src/" "mux2_1.vhd" "16c03f03addbb8a3f3dad9a1da21f497d0aa4854" "20260413225805.816":
+  entity mux2_1 at 20( 493) + 0 on 45;
+  architecture behavioral of mux2_1 at 39( 1069) + 0 on 46;
+file "/home/alberto/AOC2/proyecto1_subsanacion/src/" "mux2_5bits.vhd" "380d4d9ec33f6a77c2e56b7f36dec5b19b69ff9d" "20260413225805.916":
+  entity mux2_5bits at 20( 489) + 0 on 49;
+  architecture behavioral of mux2_5bits at 39( 1068) + 0 on 50;
+file "/home/alberto/AOC2/proyecto1_subsanacion/src/" "mux4_1.vhd" "77e61d225e8903760cce4b3e7e6390eff88901d5" "20260413225805.789":
+  entity mux4_1 at 20( 493) + 0 on 43;
+  architecture behavioral of mux4_1 at 41( 1197) + 0 on 44;
+file "/home/alberto/AOC2/proyecto1_subsanacion/src/" "RAM_128_32_P1_tests_subsanacion.vhd" "0cf8b1508883207a19078f5a11c0c8dbf321af4a" "20260413225805.416":
+  entity ram_128_32 at 20( 489) + 0 on 19;
+  architecture behavioral of ram_128_32 at 43( 1274) + 0 on 20;
+file "/home/alberto/AOC2/proyecto1_subsanacion/src/" "RAM_I_test_subsanacion.vhd" "fad032a8cbc43a446894528f6e3deb79ccd93347" "20260413225805.500":
+  entity memoriaram_i at 13( 423) + 0 on 25;
+  architecture behavioral of memoriaram_i at 40( 1570) + 0 on 26;
+file "/home/alberto/AOC2/proyecto1_subsanacion/src/" "REGISTER.vhd" "bb1f16639744f39ecc1ef4892185e16345358757" "20260413225805.451":
+  entity reg at 2( 2) + 0 on 21;
+  architecture behavioral of reg at 15( 421) + 0 on 22;
+file "/home/alberto/AOC2/proyecto1_subsanacion/src/" "testbench_AOC2_SoC_2026.vhd" "74453f741a077acd08adcf18f54843d7b66001f3" "20260413225805.175":
+  entity testbench at 3( 26) + 2 on 11;
+  architecture behavior of testbench at 10( 149) + 2 on 12;
