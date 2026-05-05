@@ -1,0 +1,9 @@
+Los cambios realizados para la subsanación del proyecto son los siguientes:
+
+En primer lugar, la FSM de la ALU estaba compuesta de 4 estados, ocupando un ciclo más de lo que debería. Sin embargo, como uno de los estados no realizaba ninguna acción, simplemente manteniendo la señal ready a '0', se ha eliminado ese estado, y ahora la ALU realiza las operaciones de tipo MAC en 3 ciclos.
+
+En segundo lugar, el proceso de cambio de estado de la FSM de la ALU incluía un reset asíncrono, es decir, la señal reset aparecía en la lista de sensibilidad del proceso, y posteriormente se evaluaba fuera del flanco de reloj. Con el cambio realizado el reset pasa a ser síncrono, evaluándose únicamente en el flanco de subida del reloj.
+
+En tercer lugar, anteriormente en el MIPS, al realizar una operación JAL, se forzaba R31 como registro donde guardar la dirección de retorno, es decir, si la instrucción era de tipo JAL, se sobrescribía la señal RW_EX con el valor "11111", ignorando el campo Rt de la instrucción. Ahora, se permite que JAL utilice cualquier registro como destino, según indique el campo Rt de la instrucción, por lo que RW_EX toma directamente el valor de RW_EX_int proveniente del multiplexor de destino.
+
+Por último, en la UD, las señales JAL_uso_rs y JAL_uso_rt estaban a '0', es decir, no se detectaban riesgos de datos cuando una instrucción posterior quería leer el registro en el que JAL escribía la dirección de retorno. El cambio realizado activa dichas señales cuando se detecta que una instrucción en ID lee un registro que está siendo escrito por un JAL en EX o MEM, generando una parada hasta que el dato esté disponible en el banco de registros.
