@@ -1,0 +1,58 @@
+INDICE DE VALIDACION Y USO DEL PROYECTO 2
+
+Objetivo
+Este fichero resume que informacion hay en notas/ y para que sirve cada documento.
+
+Documentos
+1. BASE_P2_COHESION.txt
+   Explica la base tecnica del proyecto y como se monto a partir del P1 y del P2.
+
+2. GUIA_RAPIDA_TESTS_P2.txt
+   Secuencia corta para compilar, ejecutar y comprobar los tests principales.
+
+3. HOJA_DE_RUTA_P2.txt
+   Hoja de ruta de desarrollo y orden recomendado de trabajo.
+
+4. INFORME_UC_P2.txt
+   Informe del desarrollo de la UC, decisiones de diseño, problemas encontrados y validacion inicial.
+
+5. INFORME_TESTS_FORMALES_P2.txt
+   Resultado de los tests formales adicionales:
+   - latencias
+   - pulsos de contadores
+   - validacion integrada de abort
+
+6. TABLA_COBERTURA_TESTS_P2.txt
+   Tabla de cobertura de la FSM:
+   - caso probado
+   - test que lo cubre
+   - estados recorridos
+   - evidencia
+
+7. CONTRASTE_CONTADORES_TEST_LECTURAS_P2.txt
+   Contraste del programa largo del PDF con los contadores reales de MC durante simulacion integrada.
+
+Tests disponibles en src/
+1. testbench_AOC2_SoC_2026.vhd
+   Testbench integrado base del sistema.
+
+2. tb_uc_mc_cb.vhd
+   Test unitario de la UC.
+
+3. tb_uc_mc_event_counts.vhd
+   Test formal de pulsos de inc_m/inc_w/inc_r/inc_cb.
+
+4. tb_latency_p2.vhd
+   Test formal de latencias de MD, MD Scratch e IO_REG.
+
+5. tb_p2_abort_monitor.vhd
+   Test integrado centrado en el flujo de abort.
+
+Orden recomendado de consulta
+1. README.txt
+2. docs/AOC2_2026_P2.pdf
+3. GUIA_RAPIDA_TESTS_P2.txt
+4. INFORME_UC_P2.txt
+5. INFORME_TESTS_FORMALES_P2.txt
+6. TABLA_COBERTURA_TESTS_P2.txt
+7. CONTRASTE_CONTADORES_TEST_LECTURAS_P2.txt

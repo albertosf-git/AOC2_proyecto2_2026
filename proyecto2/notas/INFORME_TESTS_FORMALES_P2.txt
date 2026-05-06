@@ -1,0 +1,105 @@
+INFORME DE TESTS FORMALES Y MEDIDAS DEL P2
+
+Resumen
+Se han anadido y ejecutado tests formales adicionales para cerrar la parte de:
+- latencias de transferencia pedidas por el PDF
+- pulsos de eventos de la UC de MC
+- validacion unitaria e integrada ya existente
+
+Ficheros de test relevantes
+1. tb_uc_mc_cb.vhd
+2. tb_p2_abort_monitor.vhd
+3. tb_latency_p2.vhd
+4. tb_uc_mc_event_counts.vhd
+
+Resultados cerrados
+
+1. UC de MC
+- read hit: validado
+- write hit: validado
+- read miss limpio: validado
+- read miss con copy-back: validado
+- write miss con write-around: validado
+- acceso a MD Scratch: validado
+- lectura de registro interno de MC: validada
+- error por write a registro interno: validado
+- error por direccion no alineada: validado
+- error por ausencia de DevSel: validado
+- limpieza de Mem_ERROR al leer x01000000: validada
+
+2. Pulsos de contadores de eventos en la UC
+Test:
+- tb_uc_mc_event_counts.vhd
+
+Secuencia comprobada:
+- 1 read hit
+- 1 write hit
+- 1 scratch read
+- 1 cacheable write miss
+- 1 clean read miss
+- 1 dirty read miss con copy-back
+
+Resultado observado:
+- inc_m = 3 pulsos
+- inc_w = 2 pulsos
+- inc_r = 3 pulsos
+- inc_cb = 1 pulso
+
+Conclusion:
+- la UC genera exactamente un pulso por evento para esta secuencia
+- los accesos a scratch no incrementan contadores de MC
+
+3. Latencias medidas
+Test:
+- tb_latency_p2.vhd
+
+Metodologia:
+- las cuentas se han hecho desde el primer ciclo en que el gestor presenta la fase de direccion al modulo destino
+- no se incluye arbitraje
+- se mide hasta el ciclo en que la transferencia queda completada
+
+Valores medidos:
+- CrB(MD) = 17 ciclos
+- CwW(MD) = 6 ciclos
+- CrW(MDscratch) = 2 ciclos
+- CwW(MDscratch) = 1 ciclo
+- CrW(IO_REG) = 1 ciclo
+- CwW(IO_REG) = 1 ciclo
+
+Interpretacion practica:
+- MD es claramente el cuello de botella del sistema
+- Scratch e IO interno responden practicamente en acceso inmediato
+
+4. Integracion y abort
+Test:
+- tb_p2_abort_monitor.vhd
+
+Resultado observado:
+- el programa largo entra en la rutina de abort
+- IO_output saca el marcador 0x00000AB0
+- despues expone la direccion de error 0x00000274
+
+Comandos ejecutados
+1. ./build.sh tb_uc_mc_cb
+2. ./tb_uc_mc_cb --stop-time=2us
+3. ./build.sh tb_p2_abort_monitor
+4. ./tb_p2_abort_monitor --stop-time=12us
+5. ./build.sh tb_latency_p2
+6. ./tb_latency_p2 --stop-time=2us
+7. ./build.sh tb_uc_mc_event_counts
+8. ./tb_uc_mc_event_counts --stop-time=1us
+
+Estado despues de estos tests
+Queda formalmente bastante mejor cerrada:
+- la logica de UC
+- la semantica de los pulsos de contadores
+- las latencias base pedidas por el PDF
+
+Lo que sigue pendiente de verdad
+1. Comparar el programa largo de Test_lecturas_P2 contra los contadores finales esperados en una ejecucion integrada completa.
+2. Volcar esta informacion a la memoria final del proyecto:
+- grafo de estados
+- tabla por estado/transicion
+- tabla de cobertura de tests
+- analisis de costes medios por acceso
+3. Si quieres una defensa mas fuerte, anadir un test integrado mas largo centrado en reemplazos repetidos y analisis de vias/conjuntos.

@@ -1,0 +1,138 @@
+INFORME DE DESARROLLO Y VALIDACION DE LA UC DEL P2
+
+Contexto
+Se ha tomado como base el trabajo previo en CODEX_WORK y se ha continuado la implementacion de la UC de la cache en:
+Completar_UC_MC_2026.vhd
+
+Objetivo
+Construir una FSM funcional para la cache del Proyecto 2 partiendo del trabajo ya iniciado, comprobando el comportamiento de forma incremental y añadiendo tests propios cuando los existentes no eran suficientes.
+
+Ficheros trabajados
+1. Completar_UC_MC_2026.vhd
+2. tb_uc_mc_cb.vhd
+3. tb_p2_abort_monitor.vhd
+
+Implementacion realizada en la UC
+Se ha completado una FSM con estos caminos principales:
+
+1. Casos inmediatos en Inicio
+- idle sin peticion
+- read hit
+- write hit
+- lectura de registro interno de MC
+- escritura ilegal en registro interno de MC
+- direccion desalineada
+
+2. Transferencias de palabra unica
+- read no cacheable hacia scratch
+- write no cacheable hacia scratch
+- write miss cacheable con write-around
+
+3. Transferencias de bloque
+- read miss cacheable con reemplazo limpio
+- read miss cacheable con copy-back previo si el bloque victima esta sucio
+
+4. Errores
+- error por direccion no atendida por ningun esclavo
+- mantenimiento de Mem_ERROR a traves de la FSM auxiliar de error
+
+Decision de diseño importante
+Se ha separado explicitamente:
+- espera de concesion del bus
+- fase de direccion
+- fase de datos
+
+Esto era necesario porque el protocolo del P2 indica que la fase de direccion comienza en el ciclo siguiente al grant, no en el mismo. La version previa generaba un lazo combinacional con el arbitro.
+
+Problemas encontrados y corregidos
+1. La primera version de la FSM generaba un bucle combinacional con el arbitro.
+   Causa:
+   - la UC intentaba usar Bus_grant en el mismo ciclo para empezar a conducir Frame y direccion
+   - eso hacia caer Grant en el mismo delta y oscilaba
+   Correccion:
+   - separacion entre estados de espera de grant y estados de envio de direccion
+
+2. El contador de palabra del bloque no tenia reset explicito entre transferencias.
+   Correccion:
+   - se ha añadido count_reset para reinicializar el contador en estados de reposo y direccion
+
+3. Los tests unitarios asumian un timing demasiado agresivo del bus.
+   Correccion:
+   - se adaptaron a la semantica correcta del protocolo: grant en un ciclo, direccion en el siguiente
+
+Tests realizados
+1. Test unitario propio
+   Fichero:
+   - tb_uc_mc_cb.vhd
+
+   Casos cubiertos:
+   - idle
+   - read hit
+   - write hit
+   - lectura de registro interno
+   - escritura ilegal en registro interno
+   - read miss no cacheable
+   - write miss cacheable con write-around
+   - read miss cacheable con fetch de bloque
+   - read miss cacheable con copy-back
+   - error por ausencia de DevSel
+
+   Resultado:
+   - pasa completamente
+
+2. Simulacion integrada con el sistema completo
+   Entorno:
+   - testbench_AOC2_SoC_2026.vhd
+   - RAM_I_test_subsanacion.vhd
+   - RAM_128_32_P1_tests_subsanacion.vhd
+
+   Resultado observado:
+   - el sistema compila
+   - la simulacion ya no cae por delta loop
+   - se observan escrituras en scratch, llenado de vias y escrituras del banco de registros del MIPS
+   - simulacion ejecutada hasta 5 us sin bloqueo
+
+3. Test integrado especifico del flujo de abort
+   Fichero:
+   - tb_p2_abort_monitor.vhd
+
+   Que comprueba:
+   - que el programa integrado llega realmente a la rutina de abort
+   - que IO_output saca el marcador 0x00000AB0
+   - que despues saca la direccion de error latcheada por la MC
+
+   Resultado observado:
+   - el marcador de abort aparece de forma repetida a partir de ~10.185 us
+   - la direccion de error visible por IO_output es 0x00000274
+   - el sistema queda en el bucle esperado de abort del programa de prueba
+
+Comandos usados para validar
+1. Unitario:
+   ./build.sh tb_uc_mc_cb
+   ./tb_uc_mc_cb --stop-time=2us
+
+2. Integrado:
+   ./build.sh testbench
+   ./testbench --stop-time=5us
+
+3. Integrado abort:
+   ./build.sh tb_p2_abort_monitor
+   ./tb_p2_abort_monitor --stop-time=12us
+
+Estado actual
+La UC ya tiene una implementacion funcional base y validada en los caminos esenciales del protocolo.
+Ademas, la jerarquia completa alcanza el caso de abort del programa largo sin colgarse y con una salida coherente por IO_output.
+
+Riesgos abiertos
+1. No se ha hecho aun una comparacion fina contra los valores esperados de m_count, r_count, w_count y cb_count del test completo del P2.
+2. El monitor integrado valida el flujo de abort del programa actual, pero no cubre aun otros posibles programas de prueba.
+3. Sigue habiendo warnings iniciales de std_logic_arith por valores no inicializados a tiempo 0. No bloquean la simulacion, pero ensucian la traza.
+
+Siguiente paso recomendado
+1. Comparar contadores de MC con los valores esperados del PDF Test_lecturas_P2.
+2. Si aparecen desviaciones, depurar primero:
+   - inc_m
+   - inc_r
+   - inc_w
+   - inc_cb
+3. Despues pasar a tests de reemplazo sucio mas exigentes y accesos al registro de error desde el propio programa.

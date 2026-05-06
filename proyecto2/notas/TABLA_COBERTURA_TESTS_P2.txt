@@ -1,0 +1,146 @@
+TABLA DE COBERTURA DE TESTS DEL P2
+
+Estados de la UC
+1. Inicio
+2. single_word_transfer_addr
+3. Send_Addr
+4. single_word_transfer_data
+5. block_transfer_addr
+6. read_block
+7. block_transfer_data
+8. Send_ADDR_CB
+9. write_dirty_block
+10. CopyBack
+11. fallo
+12. bajar_Frame
+
+Resumen por test
+
+1. tb_uc_mc_cb.vhd
+- Caso: idle
+  Estados cubiertos: Inicio
+  Evidencia: ready = 1 sin peticion
+
+- Caso: read hit
+  Estados cubiertos: Inicio
+  Evidencia: inc_r = 1, mux_output = "00"
+
+- Caso: write hit
+  Estados cubiertos: Inicio
+  Evidencia: inc_w = 1, MC_WE1 = 1, Update_dirty = 1
+
+- Caso: lectura de registro interno
+  Estados cubiertos: Inicio
+  Evidencia: mux_output = "10"
+
+- Caso: escritura ilegal en registro interno
+  Estados cubiertos: Inicio
+  Evidencia: load_addr_error = 1, Mem_ERROR queda latcheada
+
+- Caso: limpieza de Mem_ERROR leyendo x01000000
+  Estados cubiertos: Inicio
+  Evidencia: Mem_ERROR vuelve a 0 tras la lectura interna
+
+- Caso: read a MD Scratch
+  Estados cubiertos: Inicio, single_word_transfer_addr, Send_Addr, single_word_transfer_data
+  Evidencia: bus read por palabra, mux_output = "01", last_word = 1
+
+- Caso: write miss cacheable con write-around
+  Estados cubiertos: Inicio, single_word_transfer_addr, Send_Addr, single_word_transfer_data
+  Evidencia: inc_w = 1, inc_m = 1, MC_bus_Write = 1, MC_send_data = 1
+
+- Caso: read miss cacheable limpio
+  Estados cubiertos: Inicio, block_transfer_addr, read_block, block_transfer_data, bajar_Frame
+  Evidencia: inc_r = 1, inc_m = 1, escritura secuencial de bloque y tags al final
+
+- Caso: read miss cacheable con copy-back
+  Estados cubiertos: Inicio, Send_ADDR_CB, write_dirty_block, CopyBack, block_transfer_addr, read_block, block_transfer_data
+  Evidencia: inc_cb = 1, send_dirty = 1, Block_copied_back = 1 y fetch posterior del bloque nuevo
+
+- Caso: error por ausencia de DevSel
+  Estados cubiertos: Inicio, block_transfer_addr, read_block, fallo
+  Evidencia: Mem_ERROR = 1
+
+2. tb_uc_mc_event_counts.vhd
+- Caso: secuencia formal de eventos
+  Estados cubiertos: Inicio, single_word_transfer_addr, Send_Addr, single_word_transfer_data, block_transfer_addr, read_block, block_transfer_data, Send_ADDR_CB, write_dirty_block, CopyBack, bajar_Frame
+  Evidencia: pulsos observados exactos
+  Resultado: m = 3, w = 2, r = 3, cb = 1
+
+- Utilidad:
+  Este test no solo cubre funcionalidad, sino que demuestra que cada evento incrementa su contador exactamente una vez.
+
+3. tb_latency_p2.vhd
+- Caso: CrB(MD)
+  Modulo cubierto: MD_cont_2026
+  Evidencia: 17 ciclos medidos
+
+- Caso: CwW(MD)
+  Modulo cubierto: MD_cont_2026
+  Evidencia: 6 ciclos medidos
+
+- Caso: CrW(MDscratch)
+  Modulo cubierto: MD_scratch_2026
+  Evidencia: 2 ciclos medidos
+
+- Caso: CwW(MDscratch)
+  Modulo cubierto: MD_scratch_2026
+  Evidencia: 1 ciclo medido
+
+- Caso: CrW(IO_REG)
+  Modulo cubierto: IO_MD_subsystem_2026
+  Evidencia: 1 ciclo medido
+
+- Caso: CwW(IO_REG)
+  Modulo cubierto: IO_MD_subsystem_2026
+  Evidencia: 1 ciclo medido
+
+4. tb_p2_abort_monitor.vhd
+- Caso: flujo integrado de abort
+  Cobertura funcional: Data_abort + registro interno de error + salida por IO_output
+  Evidencia: aparicion de 0x00000AB0 y 0x00000274
+
+Cobertura por estado de la UC
+
+- Inicio
+  Cubierto por: tb_uc_mc_cb, tb_uc_mc_event_counts
+
+- single_word_transfer_addr
+  Cubierto por: tb_uc_mc_cb, tb_uc_mc_event_counts
+
+- Send_Addr
+  Cubierto por: tb_uc_mc_cb, tb_uc_mc_event_counts
+
+- single_word_transfer_data
+  Cubierto por: tb_uc_mc_cb, tb_uc_mc_event_counts
+
+- block_transfer_addr
+  Cubierto por: tb_uc_mc_cb, tb_uc_mc_event_counts
+
+- read_block
+  Cubierto por: tb_uc_mc_cb, tb_uc_mc_event_counts
+
+- block_transfer_data
+  Cubierto por: tb_uc_mc_cb, tb_uc_mc_event_counts
+
+- Send_ADDR_CB
+  Cubierto por: tb_uc_mc_cb, tb_uc_mc_event_counts
+
+- write_dirty_block
+  Cubierto por: tb_uc_mc_cb, tb_uc_mc_event_counts
+
+- CopyBack
+  Cubierto por: tb_uc_mc_cb, tb_uc_mc_event_counts
+
+- fallo
+  Cubierto por: tb_uc_mc_cb
+
+- bajar_Frame
+  Cubierto por: tb_uc_mc_cb, tb_uc_mc_event_counts
+
+Huecos actuales
+- No hay todavia un test formal independiente para unaligned access aislado en el nuevo bloque de cobertura, aunque ese caso si esta cubierto funcionalmente por la UC implementada.
+- No hay aun una tabla cerrada de contadores finales del programa largo frente a Test_lecturas_P2.pdf.
+
+Conclusión
+La FSM principal de la UC queda cubierta en todos sus estados operativos relevantes, y la validacion ya no depende solo de simulacion integrada larga, sino tambien de tests dirigidos a protocolo, errores, contadores y latencias.

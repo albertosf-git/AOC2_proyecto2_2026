@@ -1,0 +1,63 @@
+GUIA RAPIDA DE TESTS DEL PROYECTO 2
+
+Objetivo
+Este fichero deja una secuencia corta y reproducible para compilar y ejecutar los tests principales del Proyecto 2.
+
+Directorio de trabajo
+- Entrar en `proyecto2/src`
+
+Limpieza inicial recomendada
+- `./build.sh clean`
+
+Regla de uso
+- Compilar y ejecutar los tests de uno en uno.
+- No ejecutar varias compilaciones de `ghdl` en paralelo dentro de `src/`.
+
+Secuencia minima recomendada
+1. UC unitaria
+   `./build.sh tb_uc_mc_cb`
+   `./tb_uc_mc_cb --stop-time=2us`
+
+2. Pulsos de contadores
+   `./build.sh tb_uc_mc_event_counts`
+   `./tb_uc_mc_event_counts --stop-time=1us`
+
+3. Latencias
+   `./build.sh tb_latency_p2`
+   `./tb_latency_p2 --stop-time=2us`
+
+4. Abort integrado
+   `./build.sh tb_p2_abort_monitor`
+   `./tb_p2_abort_monitor --stop-time=12us`
+
+5. Simulacion integrada general
+   `./build.sh testbench`
+   `./testbench --stop-time=5us`
+
+Que comprobar en cada caso
+1. `tb_uc_mc_cb`
+   Debe completar sin asserts de error y cubrir hit, miss, copy-back, scratch e internal error.
+
+2. `tb_uc_mc_event_counts`
+   Debe cerrar la secuencia formal de pulsos:
+   `m=3 w=2 r=3 cb=1`
+
+3. `tb_latency_p2`
+   Debe medir estas latencias:
+   `CrB(MD)=17`
+   `CwW(MD)=6`
+   `CrW(MDscratch)=2`
+   `CwW(MDscratch)=1`
+   `CrW(IO_REG)=1`
+   `CwW(IO_REG)=1`
+
+4. `tb_p2_abort_monitor`
+   Debe observar el marcador de abort `0x00000AB0` y la direccion `0x00000274`.
+
+5. `testbench`
+   Debe correr la simulacion integrada y, si se usa la instrumentacion de debug actual, emitir trazas `MC_COUNTERS ...`.
+
+Documentos de apoyo
+- `INFORME_TESTS_FORMALES_P2.txt`
+- `TABLA_COBERTURA_TESTS_P2.txt`
+- `CONTRASTE_CONTADORES_TEST_LECTURAS_P2.txt`
