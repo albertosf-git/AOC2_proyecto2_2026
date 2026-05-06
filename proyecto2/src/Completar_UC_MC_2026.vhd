@@ -334,4 +334,3 @@ Mem_ERROR <= '1' when (error_state = memory_error) else '0';
  
    
 end Behavioral;
-
