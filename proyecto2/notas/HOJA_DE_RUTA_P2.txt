@@ -1,0 +1,110 @@
+HOJA DE RUTA PARA EMPEZAR EL PROYECTO 2 DESDE ESTA BASE
+
+FASE 0. Validacion de arranque
+1. Compila la base con ./build.sh testbench.
+2. Ejecuta una simulacion corta con ./testbench --stop-time=800ns.
+3. Abre el esquema de cache y la guia del P2 de CODEX_WORK/docs.
+4. Revisa MC_datos_CB_2026.vhd para fijar el mapa de señales entre UC, vias, FIFO, contadores y bus.
+
+FASE 1. Entender exactamente que ya esta hecho
+1. Considera cerradas estas piezas:
+   - MIPS del P1
+   - Excepciones e IRQ del P1
+   - SoC base del P1
+   - Estructura fisica del subsistema del P2
+   - Controlador de MD
+   - Scratch
+   - Arbitro
+   - IO_master
+   - Datos de la cache, vias, FIFO y contadores de MC
+2. Considera como punto principal de implementacion:
+   - Completar_UC_MC_2026.vhd
+
+FASE 2. Dibujar la FSM antes de codificar
+1. Saca en papel los casos de acceso:
+   - lectura hit cacheable
+   - escritura hit cacheable
+   - lectura miss cacheable con bloque limpio
+   - lectura miss cacheable con copy-back previo
+   - escritura miss cacheable con write-around
+   - lectura scratch no cacheable
+   - escritura scratch no cacheable
+   - lectura registro interno de MC
+   - escritura a registro interno de MC -> error
+   - direccion no alineada -> error
+   - direccion sin esclavo -> error
+2. Decide estados minimos para:
+   - espera/idle
+   - pedir bus
+   - enviar direccion
+   - esperar DevSel
+   - transferencia de palabra unica
+   - transferencia de bloque desde MD
+   - copy-back de bloque sucio
+   - finalizacion y retorno a ready
+
+FASE 3. Implementacion incremental de la UC
+1. Empieza por los casos mas simples:
+   - lectura hit
+   - escritura hit
+   - lectura de registro interno
+   - deteccion de no alineado
+2. Sigue con scratch:
+   - lectura scratch
+   - escritura scratch
+3. Luego implementa miss de lectura sin dirty replacement.
+4. Despues añade copy-back de bloque sucio.
+5. Deja para el final el write miss cacheable con write-around.
+
+FASE 4. Orden recomendado de pruebas
+1. Prueba solo lecturas cacheables usando Test_lecturas_P2.pdf.
+2. Verifica:
+   - hit0/hit1
+   - via_2_rpl
+   - MC_tags_WE
+   - WE_via0/WE_via1
+   - mux_output
+   - ready
+   - MC_Bus_Req
+   - MC_send_addr_ctrl
+   - MC_send_data
+   - MC_frame
+   - MC_last_word
+3. Confirma los contadores:
+   - m_count
+   - r_count
+   - w_count
+   - cb_count
+4. Luego prueba scratch.
+5. Luego prueba aborts:
+   - direccion no alineada
+   - direccion sin respuesta
+   - escritura a 0x01000000
+6. Por ultimo prueba reemplazos sucios y convivencia con IO_master.
+
+FASE 5. Criterios de correcto funcionamiento
+1. Cada evento incrementa su contador una sola vez.
+2. Los accesos scratch nunca cargan bloque en cache.
+3. Un miss de escritura cacheable no debe terminar metiendo el bloque en MC si aplicas write-around correctamente.
+4. Los bloques sucios deben escribirse a MD antes de ser reemplazados.
+5. Mem_ERROR debe mantenerse activo hasta leer 0x01000000.
+6. El MIPS debe ver IO_MEM_ready solo cuando el subsistema realmente ha terminado la operacion solicitada.
+
+FASE 6. Ficheros a vigilar mientras implementas
+1. Completar_UC_MC_2026.vhd
+2. MC_datos_CB_2026.vhd
+3. IO_MD_subsystem_2026.vhd
+4. RAM_I_test_subsanacion.vhd
+5. RAM_128_32_P1_tests_subsanacion.vhd
+
+FASE 7. Cuando ya funcione lo basico
+1. Limpia la FSM y renombra estados para que tengan sentido.
+2. Prepara tabla estado -> señales activas.
+3. Calcula latencias:
+   - CrB(MD)
+   - CwW(MD)
+   - CrW(MDScratch)
+   - CwW(MDScratch)
+   - CrW/CwW(IO_REG)
+4. Escribe un programa de integracion mas completo que el de lecturas.
+5. Solo despues optimiza.

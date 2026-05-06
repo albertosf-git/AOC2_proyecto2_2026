@@ -1,0 +1,61 @@
+BASE DE TRABAJO P2 MONTADA EN CODEX_WORK
+
+Objetivo de esta base
+Dejar un entorno unico y arrancable para el Proyecto 2, reutilizando el MIPS funcional del Proyecto 1 y sustituyendo el subsistema de memoria por la jerarquia nueva del P2.
+
+Que se ha hecho
+1. Se ha copiado como base el contenido de proyecto1/src dentro de CODEX_WORK.
+2. Se han eliminado artefactos generados del P1:
+   - WORK/
+   - testbench
+   - test.ghw
+   - test.gtkw
+   - Makefile
+3. Se han sustituido los modulos del P1 que el P2 redefine:
+   - IO_MD_subsystem_2026.vhd
+   - RAM_I_test_subsanacion.vhd
+   - RAM_128_32_P1_tests_subsanacion.vhd
+   - testbench_AOC2_SoC_2026.vhd
+4. Se han añadido los modulos nuevos del P2:
+   - Completar_UC_MC_2026.vhd
+   - MC_datos_CB_2026.vhd
+   - MD_cont_2026.vhd
+   - MD_scratch_2026.vhd
+   - Via_2026_CB.vhd
+   - FIFO_reg.vhd
+   - arbitro.vhd
+   - IO_master_2026.vhd
+   - counter_2bits.vhd
+   - memoriaRAM_64_32_enable.vhd
+5. Se ha copiado documentacion clave a CODEX_WORK/docs:
+   - P2: guia, esquema de cache, test de lecturas
+   - P1: guia, esquema, codigo de correcciones, codigo test IRQ
+
+Estado actual de la base
+- Compila correctamente con GHDL desde CODEX_WORK.
+- El testbench del P2 elabora y ejecuta simulacion corta.
+- El MIPS y el SoC siguen siendo los del P1.
+- El subsistema de memoria ya es el del P2.
+- La parte claramente pendiente de implementar es la UC de la cache:
+  fichero Completar_UC_MC_2026.vhd
+
+Comandos utiles
+1. Compilar:
+   ./build.sh testbench
+
+2. Ejecutar simulacion corta:
+   ./testbench --stop-time=800ns
+
+3. Ejecutar simulacion con ondas:
+   ./build.sh run testbench 2000
+
+Arquitectura de trabajo recomendada
+- No toques el MIPS salvo que detectes una incompatibilidad real.
+- Trabaja primero en Completar_UC_MC_2026.vhd.
+- Usa MC_datos_CB_2026.vhd y Esquema_MC_2026.pptx.pdf como referencia estructural.
+- Usa Test_lecturas_P2.pdf y las memorias del P2 como prueba inicial de lectura/fallo/reemplazo.
+
+Advertencias
+- Hay warnings iniciales tipicos de señales sin inicializar en tiempo 0; la base sigue compilando y simulando.
+- MD_scratch_2026.vhd da un warning de nombre oculto, pero no bloquea la compilacion.
+- El modulo IO_master escribe continuamente en la scratch; esto es correcto y forma parte del comportamiento del P2.

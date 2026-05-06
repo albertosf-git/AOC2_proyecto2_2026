@@ -1,4 +1,10 @@
 v 4
+file "/home/alberto/AOC2/proyecto2/AOC2_proyecto2_2026/proyecto1/src/" "mux2_5bits.vhd" "e378e191a56a48c3078b0e33f1e5d42e9241f56f" "20260506002428.645":
+  entity mux2_5bits at 20( 470) + 0 on 65;
+  architecture behavioral of mux2_5bits at 39( 1030) + 0 on 66;
+file "/home/alberto/AOC2/proyecto2/AOC2_proyecto2_2026/proyecto1/src/" "mux4_1.vhd" "8ac8b3465ff00ae263742658a09de84c9c17a985" "20260506002428.595":
+  entity mux4_1 at 20( 474) + 0 on 61;
+  architecture behavioral of mux4_1 at 41( 1157) + 0 on 62;
 file "/home/alberto/AOC2/proyecto1_subsanacion/src/" "adder32.vhd" "314628325a7fba8ded83ce676b48051d32b99dc4" "20260413225805.478":
   entity adder32 at 20( 486) + 0 on 23;
   architecture behavioral of adder32 at 39( 1097) + 0 on 24;
@@ -50,15 +56,6 @@ file "/home/alberto/AOC2/proyecto1_subsanacion/src/" "INCOMPLETE_UD_2026.vhd" "2
 file "/home/alberto/AOC2/proyecto1_subsanacion/src/" "IO_MD_subsystem_2026.vhd" "a3b21d804043996e2b729f7c98e4c203d804a061" "20260413225805.229":
   entity io_data_memory_subsystem at 20( 489) + 0 on 15;
   architecture behavioral of io_data_memory_subsystem at 56( 2311) + 0 on 16;
-file "/home/alberto/AOC2/proyecto1_subsanacion/src/" "mux2_1.vhd" "16c03f03addbb8a3f3dad9a1da21f497d0aa4854" "20260413225805.816":
-  entity mux2_1 at 20( 493) + 0 on 45;
-  architecture behavioral of mux2_1 at 39( 1069) + 0 on 46;
-file "/home/alberto/AOC2/proyecto1_subsanacion/src/" "mux2_5bits.vhd" "380d4d9ec33f6a77c2e56b7f36dec5b19b69ff9d" "20260413225805.916":
-  entity mux2_5bits at 20( 489) + 0 on 49;
-  architecture behavioral of mux2_5bits at 39( 1068) + 0 on 50;
-file "/home/alberto/AOC2/proyecto1_subsanacion/src/" "mux4_1.vhd" "77e61d225e8903760cce4b3e7e6390eff88901d5" "20260413225805.789":
-  entity mux4_1 at 20( 493) + 0 on 43;
-  architecture behavioral of mux4_1 at 41( 1197) + 0 on 44;
 file "/home/alberto/AOC2/proyecto1_subsanacion/src/" "RAM_128_32_P1_tests_subsanacion.vhd" "0cf8b1508883207a19078f5a11c0c8dbf321af4a" "20260413225805.416":
   entity ram_128_32 at 20( 489) + 0 on 19;
   architecture behavioral of ram_128_32 at 43( 1274) + 0 on 20;
@@ -68,6 +65,9 @@ file "/home/alberto/AOC2/proyecto1_subsanacion/src/" "RAM_I_test_subsanacion.vhd
 file "/home/alberto/AOC2/proyecto1_subsanacion/src/" "REGISTER.vhd" "bb1f16639744f39ecc1ef4892185e16345358757" "20260413225805.451":
   entity reg at 2( 2) + 0 on 21;
   architecture behavioral of reg at 15( 421) + 0 on 22;
-file "/home/alberto/AOC2/proyecto1_subsanacion/src/" "testbench_AOC2_SoC_2026.vhd" "74453f741a077acd08adcf18f54843d7b66001f3" "20260413225805.175":
-  entity testbench at 3( 26) + 2 on 11;
-  architecture behavior of testbench at 10( 149) + 2 on 12;
+file "/home/alberto/AOC2/proyecto2/AOC2_proyecto2_2026/proyecto1/src/" "testbench_AOC2_SoC_2026.vhd" "8ff26b51b282c359f29a9b68c913e99d1ad81f0f" "20260506002428.557":
+  entity testbench at 3( 24) + 2 on 59;
+  architecture behavior of testbench at 10( 140) + 2 on 60;
+file "/home/alberto/AOC2/proyecto2/AOC2_proyecto2_2026/proyecto1/src/" "mux2_1.vhd" "d95b3cf343dce0d39dff5738a8cc7903075df3df" "20260506002428.623":
+  entity mux2_1 at 20( 474) + 0 on 63;
+  architecture behavioral of mux2_1 at 39( 1031) + 0 on 64;
