@@ -316,6 +316,7 @@ begin
             if (bus_TRDY = '1') then
                 if (last_word_block = '1') then
                     Block_copied_back <= '1';
+                    Update_dirty <= '1';
                     next_state <= block_transfer_addr;
                 else
                     next_state <= CopyBack;
