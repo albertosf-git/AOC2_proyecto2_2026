@@ -32,6 +32,9 @@ Documentos
 7. CONTRASTE_CONTADORES_TEST_LECTURAS_P2.txt
    Contraste del programa largo del PDF con los contadores reales de MC durante simulacion integrada.
 
+8. GUIA_GTKWAVE_CAPTURAS_P2.txt
+   Flujo reproducible para regenerar las 11 capturas de GTKWave de la memoria final.
+
 Tests disponibles en src/
 1. testbench_AOC2_SoC_2026.vhd
    Testbench integrado base del sistema.
@@ -48,6 +51,16 @@ Tests disponibles en src/
 5. tb_p2_abort_monitor.vhd
    Test integrado centrado en el flujo de abort.
 
+6. tb_io_md_hierarchy_paths.vhd
+   Test integrado dirigido de rutas clave en IO_Data_Memory_Subsystem:
+   - copy-back
+   - write-around
+   - scratch
+   - Addr_Error_Reg
+
+7. tb_uc_mc_unaligned.vhd
+   Test unitario focalizado en la deteccion inmediata de accesos desalineados.
+
 Orden recomendado de consulta
 1. README.txt
 2. docs/AOC2_2026_P2.pdf
@@ -56,3 +69,4 @@ Orden recomendado de consulta
 5. INFORME_TESTS_FORMALES_P2.txt
 6. TABLA_COBERTURA_TESTS_P2.txt
 7. CONTRASTE_CONTADORES_TEST_LECTURAS_P2.txt
+8. GUIA_GTKWAVE_CAPTURAS_P2.txt

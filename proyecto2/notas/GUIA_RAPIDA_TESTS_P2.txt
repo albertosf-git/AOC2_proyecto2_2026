@@ -34,6 +34,14 @@ Secuencia minima recomendada
    `./build.sh testbench`
    `./testbench --stop-time=5us`
 
+6. Rutas integradas de jerarquia IO/MD
+   `./build.sh tb_io_md_hierarchy_paths`
+   `./tb_io_md_hierarchy_paths --stop-time=5us`
+
+7. Camino `unaligned` de la UC
+   `./build.sh tb_uc_mc_unaligned`
+   `./tb_uc_mc_unaligned --stop-time=1us`
+
 Que comprobar en cada caso
 1. `tb_uc_mc_cb`
    Debe completar sin asserts de error y cubrir hit, miss, copy-back, scratch e internal error.
@@ -57,7 +65,22 @@ Que comprobar en cada caso
 5. `testbench`
    Debe correr la simulacion integrada y, si se usa la instrumentacion de debug actual, emitir trazas `MC_COUNTERS ...`.
 
+6. `tb_io_md_hierarchy_paths`
+   Debe cerrar sin asserts y validar en la jerarquia integrada:
+   - write-around
+   - copy-back con refetch correcto
+   - scratch write/read
+   - captura y limpieza de `Addr_Error_Reg`
+
+7. `tb_uc_mc_unaligned`
+   Debe cerrar sin asserts y comprobar:
+   - rechazo inmediato del acceso desalineado
+   - activacion de `load_addr_error`
+   - persistencia de `Mem_ERROR`
+   - borrado de `Mem_ERROR` al leer el registro interno
+
 Documentos de apoyo
 - `INFORME_TESTS_FORMALES_P2.txt`
 - `TABLA_COBERTURA_TESTS_P2.txt`
 - `CONTRASTE_CONTADORES_TEST_LECTURAS_P2.txt`
+- `GUIA_GTKWAVE_CAPTURAS_P2.txt`

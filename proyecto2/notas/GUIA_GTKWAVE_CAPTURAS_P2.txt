@@ -1,0 +1,49 @@
+GUIA RAPIDA PARA GENERAR CAPTURAS GTKWave DEL P2
+
+Objetivo
+Dejar un flujo reproducible para regenerar las 11 ondas de la memoria final y abrirlas una a una con la vista preparada.
+
+Idea general
+- Se usa un unico testbench generico: `testbench_AOC2_SoC_2026.vhd`
+- El escenario de cada captura se selecciona activando el bloque adecuado `signal RAM : RamType := (...)` en:
+  - `ENTREGA/src/RAM_I_P2.vhd`
+  - `ENTREGA/src/RAM_128_32_P2.vhd`
+- Los scripts generan una copia de trabajo temporal en `gtkwave_bundle/workdir` y no modifican `ENTREGA/`.
+
+Scripts
+1. `tools/generate_p2_capture_bundle.sh`
+   - recompila el testbench integrado para cada una de las 11 capturas
+   - genera:
+     - `gtkwave_bundle/waves/*.ghw`
+     - `gtkwave_bundle/gtkw/*.gtkw`
+     - `gtkwave_bundle/logs/*.log`
+     - `gtkwave_bundle/capture_manifest.tsv`
+
+2. `tools/run_p2_capture_sequence.sh`
+   - abre GTKWave captura a captura
+   - espera Enter entre una captura y la siguiente
+
+Uso
+1. Generar el bundle:
+   `./tools/generate_p2_capture_bundle.sh`
+
+2. En una sesion grafica, abrir la secuencia:
+   `./tools/run_p2_capture_sequence.sh`
+
+Capturas preparadas
+- 01 `Test_lecturas_P2_contadores`
+- 02 `Test_lecturas_P2_abort`
+- 03 `write_around`
+- 04 `copy_back`
+- 05 `refetch_bloque_A`
+- 06 `scratch`
+- 07 `io_registers`
+- 08 `readonly_internal_reg`
+- 09 `no_devsel`
+- 10 `unaligned`
+- 11 `undef`
+
+Notas
+- Los `.gtkw` ya cargan un conjunto de senales filtrado para cada captura.
+- El `timestart` de cada vista cae cerca del evento relevante, aunque puede requerir ajustar zoom fino manualmente.
+- El flujo esta pensado para documentacion y memoria, no para sustituir los tests formales.

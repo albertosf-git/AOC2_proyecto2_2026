@@ -1,0 +1,17 @@
+La fecha de entrega es el 12 de mayo a las 9:00, pero se admitirán entregas con penalización (ver aviso en el foro) hasta el día 14 a las 9:00.
+
+Debéis enviar el proyecto en Moodle los dos miembros de la pareja por separado.
+
+Subid en un .zip la memoria y los fuentes que hayáis modificado en los dos proyectos: vuestra UC y los fuentes de la P1 (UC, UD, UA, MIPS, ALU) y las memorias con vuestras instrucciones y datos de vuestras pruebas.
+
+Preferiblemente, incluid las RAMs de instrucciones y datos en un mismo archivo .vhd (podéis tener varias memorias comentadas indicando para cual de vuestras pruebas es cada una de ellas).
+
+Antes de enviar el proyecto revisad que todo funciona, que están todos los ficheros y que son los ficheros correctos. Revisad también el guion para asegurar que no os dejáis ningún apartado en la memoria. No esperéis a última hora para evitar penalizaciones.
+
+Recordad que es un requisito imprescindible explicar qué pruebas habéis realizado para comprobar que vuestro diseño funciona. Si no explicáis esas pruebas o si vuestro diseño no funciona en las pruebas que explicáis la entrega estará suspendida.
+
+Recordad también que cuando convoquemos para la defensa presencial, preguntaremos sobre cualquier cosa relacionada con el proyecto. En función de los resultados de cada uno en la evaluación continua (proyecto anterior, prácticas, problemas, pruebas de diagnóstico...) insistiremos más o insistiremos menos.
+
+vuestra UC y los fuentes de la P1 (UC, UD, UA, MIPS, ALU) y las memorias con vuestras instrucciones y datos de vuestras pruebas.
+
+prepara en una carpeta la entrega con exactamente y solo siguientes fuentes: la UC del proyecto 2, los fuentes modificados del proyecto 1 (UC, UD, UA, MIPS, ALU) y las memorias RAM de instrucciones y datos de pruebas

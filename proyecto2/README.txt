@@ -10,6 +10,8 @@ Estructura
   PDFs del enunciado, esquemas y documentos de apoyo del P1 y del P2.
 - `notas/`
   Informes tecnicos, cobertura de tests, contraste de contadores, hoja de ruta e indice de uso.
+- `tools/`
+  Scripts auxiliares para regenerar bundles de GTKWave y abrir secuencias de capturas.
 
 Ficheros clave
 - `src/Completar_UC_MC_2026.vhd`
@@ -20,10 +22,15 @@ Ficheros clave
 - `src/tb_uc_mc_event_counts.vhd`
 - `src/tb_latency_p2.vhd`
 - `src/tb_p2_abort_monitor.vhd`
+- `src/tb_io_md_hierarchy_paths.vhd`
+- `src/tb_uc_mc_unaligned.vhd`
 - `notas/INFORME_UC_P2.txt`
 - `notas/INFORME_TESTS_FORMALES_P2.txt`
 - `notas/TABLA_COBERTURA_TESTS_P2.txt`
 - `notas/CONTRASTE_CONTADORES_TEST_LECTURAS_P2.txt`
+- `notas/GUIA_GTKWAVE_CAPTURAS_P2.txt`
+- `tools/generate_p2_capture_bundle.sh`
+- `tools/run_p2_capture_sequence.sh`
 - `notas/INDICE_VALIDACION_Y_USO.txt`
 
 Que esta ya hecho
@@ -32,7 +39,10 @@ Que esta ya hecho
 - Test integrado del flujo de abort.
 - Tests formales de latencias.
 - Test formal de pulsos de eventos de contadores.
+- Test integrado dirigido de rutas clave de la jerarquia IO/MD.
+- Test unitario dirigido del camino `unaligned` de la UC.
 - Contraste del programa largo con `Test_lecturas_P2.pdf` en la fase normal del bucle.
+- Flujo reproducible para generar y abrir las capturas GTKWave de la memoria final.
 
 Flujo recomendado de uso
 1. Leer `docs/AOC2_2026_P2.pdf`.
@@ -65,6 +75,18 @@ Comandos utiles
 - Abort integrado:
   `./build.sh tb_p2_abort_monitor`
   `./tb_p2_abort_monitor --stop-time=12us`
+
+- Rutas integradas de jerarquia IO/MD:
+  `./build.sh tb_io_md_hierarchy_paths`
+  `./tb_io_md_hierarchy_paths --stop-time=5us`
+
+- Camino `unaligned` de la UC:
+  `./build.sh tb_uc_mc_unaligned`
+  `./tb_uc_mc_unaligned --stop-time=1us`
+
+- Bundle GTKWave para las 11 capturas:
+  `./tools/generate_p2_capture_bundle.sh`
+  `./tools/run_p2_capture_sequence.sh`
 
 Notas importantes
 - `src/MC_datos_CB_2026.vhd` incluye instrumentacion de depuracion para emitir trazas `MC_COUNTERS` durante simulacion integrada. Sirve para contrastar contadores y no cambia la logica funcional de la cache.
